@@ -33,8 +33,7 @@
         <!-- Текст для счета -->
         <a-text id="scoreText" value="Счет: 0" position="-1 3 -3" color="white" align="center" width="6"></a-text>
     </a-scene>
-
-    <script>
+ <script>
         let score = 0;
 
         // Функция для обработки столкновения
@@ -49,6 +48,10 @@
                 collidedElement.parentNode.removeChild(collidedElement);
             }
         }
+
+        // Добавляем слушатель событий для столкновений
+        document.querySelector('a-scene').addEventListener('collide', handleCollision);
+    </script>
 
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
