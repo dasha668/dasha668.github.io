@@ -55,6 +55,29 @@
 
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
+     function updateTimer() {
+            timeLeft--;
+            document.getElementById('timerText').setAttribute('value', 'Время: ' + timeLeft);
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+        }
+
+        // Функция для завершения игры
+        function endGame() {
+            document.getElementById('gameOverText').setAttribute('value', 'Игра окончена! Счет: ' + score);
+            document.getElementById('gameOverText').setAttribute('visible', 'true');
+            // Отключаем управление
+            document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
+        }
+
+        // Добавляем слушатель событий для столкновений
+        document.querySelector('a-scene').addEventListener('collide', handleCollision);
+
+        // Запускаем таймер
+        timerInterval = setInterval(updateTimer, 1000);
     </script>
 </body>
 </html>
