@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR Сцена с Физикой</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccaslin/aframe-physics-system/master/dist/aframe-physics-system.min.js"></script>
+</head>
+<body>
+    <a-scene physics="gravity: -9.8">
+        <!-- Небо -->
+        <a-sky color="#87CEEB"></a-sky>
+
+        <!-- Пол -->
+        <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10" color="#8B4513" static-body></a-plane>
+
+        <!-- Кубы -->
+        <a-box position="-2 2 -3" rotation="0 45 0" width="1" height="1" depth="1" color="#4CC3D2" class="collectible" dynamic-body></a-box>
+        <a-box position="2 2 -3" rotation="0 45 0" width="1" height="1" depth="1" color="#EF2D5E" class="collectible" dynamic-body></a-box>
+
+        <!-- Сферы -->
+        <a-sphere position="-1 2 -2" radius="0.5" color="#FFC65D" class="collectible" dynamic-body></a-sphere>
+        <a-sphere position="1 2 -2" radius="0.5" color="#7BC8A4" class="collectible" dynamic-body></a-sphere>
+        <a-sphere position="0 2 -4" radius="0.5" color="#FF6347" class="collectible" dynamic-body></a-sphere>
+
+        <!-- Камера с контроллерами -->
+        <a-entity id="camera" camera look-controls wasd-controls="acceleration:100" position="0 1.6 0">
+            <a-entity id="leftHand" oculus-touch-controls="hand: left"></a-entity>
+            <a-entity id="rightHand" oculus-touch-controls="hand: right"></a-entity>
+        </a-entity>
+
+        <!-- Текст для счета -->
+        <a-text id="scoreText" value="Счет: 0" position="-1 3 -3" color="white" align="center" width="6"></a-text>
+    </a-scene>
+
+    <script>
+        let score = 0;
+
+        // Функция для обработки столкновения
+        function handleCollision(event) {
+            const collidedElement = event.detail.body.el;
+            if (collidedElement.classList.contains('collectible')) {
+                // Увеличиваем счет
+                score++;
+                document.getElementById('scoreText').setAttribute('value', 'Счет: ' + score);
+
+                // Удаляем объект
+                collidedElement.parentNode.removeChild(collidedElement);
+            }
+        }
+
+        // Добавляем слушатель событий для столкновений
+        document.querySelector('a-scene').addEventListener('collide', handleCollision);
+    </script>
+</body>
+</html>
+
+
