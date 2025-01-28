@@ -1,22 +1,5 @@
 <!DOCTYPE html>
-const raycaster = new THREE.Raycaster();
 <html lang="ru">
-function render() {
-
-	// update the picking ray with the camera and pointer position
-	raycaster.setFromCamera( pointer, camera );
-
-	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects( scene.children );
-
-	for ( let i = 0; i < intersects.length; i ++ ) {
-
-		intersects[ i ].object.material.color.set( 0xff0000 );
-
-	}
-
-	renderer.render( scene, camera );
-    }
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +95,6 @@ function render() {
         // Запускаем таймер
         timerInterval = setInterval(updateTimer, 1000);
     </script>
-                window.requestAnimationFrame(render);
 </body>
 </html>
 
