@@ -1,5 +1,22 @@
 <!DOCTYPE html>
+const raycaster = new THREE.Raycaster();
 <html lang="ru">
+function render() {
+
+	// update the picking ray with the camera and pointer position
+	raycaster.setFromCamera( pointer, camera );
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects( scene.children );
+
+	for ( let i = 0; i < intersects.length; i ++ ) {
+
+		intersects[ i ].object.material.color.set( 0xff0000 );
+
+	}
+
+	renderer.render( scene, camera );
+    }
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,12 +48,23 @@
         </a-entity>
 
         <!-- Текст для счета -->
-         <a-text id="scoreText" value="Счет: 0" position="-1 5 -3" color="white" align="center" width="6"></a-text>
-        <a-text id="timerText" value="Время: 60" position="1 4 -3" color="white" align="center" width="6"></a-text>
-        <a-text id="gameOverText" value="" position="0 4 -3" color="red" align="center" width="6" visible="false"></a-text>
-    </a-scene>
  <script>
-        let score = 0;
+     let score = 0;
+     let timer = 60;// Start timer at 60 seconds
+     let gameInterval;
+
+     function updateScoreDisplay(){
+         document.gerElementById('score-text').setAttribute('value', 'Score: ' + score);
+     }
+
+     function updateTimer() {
+         if (timer > 0) {
+             timer--;
+             document.getElementById('timer-text').setAttribute('value', 'Time left: ' + timer);
+         } else {
+             endGame();
+         }
+     }
 
         // Функция для обработки столкновения
         function handleCollision(event) {
@@ -77,6 +105,7 @@
         // Запускаем таймер
         timerInterval = setInterval(updateTimer, 1000);
     </script>
+                window.requestAnimationFrame(render);
 </body>
 </html>
 
