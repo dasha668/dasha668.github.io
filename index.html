@@ -47,24 +47,30 @@ function render() {
             <a-entity id="rightHand" oculus-touch-controls="hand: right"></a-entity>
         </a-entity>
 
-        <!-- Текст для счета -->
-   <script>
-     let score = 0;
-     let timer = 60;// Start timer at 60 seconds
-     let gameInterval;
+   <!-- Text for displaying score and timer -->
+        <a-text id="score-text" value="Score: 0" position="-4 2 -4"></a-text>
+        <a-text id="timer-text" value="" position="-4 2 -5"></a-text>
+    </a-scene>
 
-     function updateScoreDisplay(){
-         document.gerElementById('score-text').setAttribute('value', 'Score: ' + score);
-     }
+    <script>
+        let score = 0;
+        let timer = 60; // Start timer at 60 seconds
+        let gameInterval;
 
-     function updateTimer() {
-         if (timer > 0) {
-             timer--;
-             document.getElementById('timer-text').setAttribute('value', 'Time left: ' + timer);
-         } else {
-             endGame();
-         }
-     }
+        // Function to update the score on screen
+        function updateScoreDisplay() {
+            document.getElementById('score-text').setAttribute('value', 'Score: ' + score);
+        }
+
+        // Function to update the timer
+        function updateTimer() {
+            if (timer > 0) {
+                timer--;
+                document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
+            } else {
+                endGame();
+            }
+        }
 
 
         // Функция для обработки столкновения
