@@ -110,6 +110,27 @@
             // Отключаем управление
             document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
         }
+        // Restart game function
+        function restartGame() {
+            score = 0;
+            timer = 60; // Reset timer to 60 seconds
+            updateScoreDisplay();
+            document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
+            document.getElementById('game-over').style.display = 'none'; // Hide game over message
+            
+            const collectibles = document.querySelectorAll('.collectible');
+            collectibles.forEach(obj => {
+                obj.setAttribute('visible', true); // Return objects to the scene
+                obj.setAttribute('position', obj.getAttribute('position')); // Ensure they are visible
+            });
+            
+            gameInterval = setInterval(updateTimer, 1000); // Start timer
+            updateTimer(); // Start timer immediately
+        }
+        // Initialize score and timer display
+        updateScoreDisplay();
+        document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
+
         // Запускаем таймер
         timerInterval = setInterval(updateTimer, 1000);
     </script>
