@@ -48,6 +48,24 @@ function render() {
         </a-entity>
 
         <!-- Текст для счета -->
+   <script>
+     let score = 0;
+     let timer = 60;// Start timer at 60 seconds
+     let gameInterval;
+
+     function updateScoreDisplay(){
+         document.gerElementById('score-text').setAttribute('value', 'Score: ' + score);
+     }
+
+     function updateTimer() {
+         if (timer > 0) {
+             timer--;
+             document.getElementById('timer-text').setAttribute('value', 'Time left: ' + timer);
+         } else {
+             endGame();
+         }
+     }
+
 
         // Функция для обработки столкновения
         function handleCollision(event) {
