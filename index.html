@@ -104,7 +104,8 @@
 
         // Функция для завершения игры
         function endGame() {
-            document.getElementById('gameOverText').setAttribute('value', 'Игра окончена! Счет: ' + score);
+            clearInterval(gameInterval);
+            document.getElementById('gameOverText').setAttribute('value', 'Game over! Score: ' + score);
             document.getElementById('gameOverText').setAttribute('visible', 'true');
             // Отключаем управление
             document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
