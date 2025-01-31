@@ -35,13 +35,7 @@
         <a-text id="timer-text" value="Timer: 60" position="-4 5 -5"></a-text>
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
-     function updateTimer() {
-            
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                endGame();
-            }
-        }
+     function updateTimer()
         //Добавить физический движок
         physics="debug: true">
         //Добавьте анимацию исчезновения (частицы):
@@ -137,6 +131,14 @@
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
         <script>document.querySelector('#collectSound').components.sound.playSound();</script>
+    document.querySelector('a-scene').addEventListener('collide', handleCollision);
+     function updateTimer() {
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+        }
     </script>
 </body>
 </html>
