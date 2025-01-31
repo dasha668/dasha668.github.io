@@ -106,6 +106,9 @@
         <a-scene physics="debug: true">
         //Добавьте анимацию исчезновения (частицы):
         <a-entity id="explosion" particle-system="preset: explosion; color: yellow"></a-entity>
+        //Интегрируйте звук при сборе:
+        <a-sound src="v-starom-dome-na-obochine.mp3" autoplay="false" id="collectSound"></a-sound>
+
             
         // Функция для завершения игры
         function endGame() {
