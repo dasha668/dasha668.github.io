@@ -101,7 +101,12 @@
                 endGame();
             }
         }
-
+        //Добавить физический движок
+        <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
+        <a-scene physics="debug: true">
+        //Добавьте анимацию исчезновения (частицы):
+        <a-entity id="explosion" particle-system="preset: explosion; color: yellow"></a-entity>
+            
         // Функция для завершения игры
         function endGame() {
             clearInterval(gameInterval);
