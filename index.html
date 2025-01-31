@@ -36,9 +36,7 @@
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
      function updateTimer() {
-            timeLeft--;
-            document.getElementById('timerText').setAttribute('value', 'Время: ' + timeLeft);
-
+            
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 endGame();
@@ -55,49 +53,6 @@
         <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
           position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
         </a-entity>
-        //Рандомизируйте позиции при перезапуске:
-        function spawnObjects() {
-      const positions = [];
-      for (let i = 0; i < 5; i++) {    
-          const x = Math.random() * 10 - 5;
-          const z = Math.random() * 10 - 5;
-          positions.push({x, y: 1, z});
-  }
-  return positions;
-}
-        //Настройте физику для ваших объектов:
-        <a-entity geometry="primitive: box" material="color: blue" 
-        position="0 5 -10" dynamic-body></a-entity>
-        //Добавьте гравитацию:
-        AFRAME.registerComponent('gravity', {
-            tick: function () {
-            this.el.body.applyForce(0, -9.8, 0);
-  }
-});
-
-            
-        // Функция для завершения игры
-        function endGame() {
-            clearInterval(gameInterval);
-            document.getElementById('gameOverText').setAttribute('value', 'Game over! Score: ' + score);
-            document.getElementById('gameOverText').setAttribute('visible', 'true');
-            // Отключаем управление
-            document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
-        }
-        // Restart game function
-        function restartGame() {
-            score = 0;
-            timer = 60; // Reset timer to 60 seconds
-            updateScoreDisplay();
-            document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
-            document.getElementById('game-over').style.display = 'none'; // Hide game over message
-            
-            const collectibles = document.querySelectorAll('.collectible');
-            collectibles.forEach(obj => {
-                obj.setAttribute('visible', true); // Return objects to the scene
-                obj.setAttribute('position', obj.getAttribute('position')); // Ensure they are visible
-            });
-            
             gameInterval = setInterval(updateTimer, 1000); // Start timer
             updateTimer(); // Start timer immediately
         }
@@ -128,6 +83,26 @@
                 endGame();
             }
         }
+        //Рандомизируйте позиции при перезапуске:
+        function spawnObjects() {
+      const positions = [];
+      for (let i = 0; i < 5; i++) {    
+          const x = Math.random() * 10 - 5;
+          const z = Math.random() * 10 - 5;
+          positions.push({x, y: 1, z});
+  }
+  return positions;
+}
+        //Настройте физику для ваших объектов:
+        <a-entity geometry="primitive: box" material="color: blue" 
+        position="0 5 -10" dynamic-body></a-entity>
+        //Добавьте гравитацию:
+        AFRAME.registerComponent('gravity', {
+            tick: function () {
+            this.el.body.applyForce(0, -9.8, 0);
+  }
+});
+
 
 
         // Функция для обработки столкновения
@@ -142,6 +117,29 @@
                 collidedElement.parentNode.removeChild(collidedElement);
             }
         }
+        // Функция для завершения игры
+        function endGame() {
+            clearInterval(gameInterval);
+            document.getElementById('gameOverText').setAttribute('value', 'Game over! Score: ' + score);
+            document.getElementById('gameOverText').setAttribute('visible', 'true');
+            // Отключаем управление
+            document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
+        }
+        // Restart game function
+        function restartGame() {
+            score = 0;
+            timer = 60; // Reset timer to 60 seconds
+            updateScoreDisplay();
+            document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
+            document.getElementById('game-over').style.display = 'none'; // Hide game over message
+            
+            const collectibles = document.querySelectorAll('.collectible');
+            collectibles.forEach(obj => {
+                obj.setAttribute('visible', true); // Return objects to the scene
+                obj.setAttribute('position', obj.getAttribute('position')); // Ensure they are visible
+            });
+            gameInterval = setInterval(updateTimer, 1000); // Start timer
+            updateTimer(); // Start timer immediately
 
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
