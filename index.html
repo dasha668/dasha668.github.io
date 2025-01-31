@@ -52,7 +52,8 @@
         /Добавьте движущиеся объекты с помощью анимации:
         <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
           position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
-        </a-entity>
+        </a-entity> 
+            {
             gameInterval = setInterval(updateTimer, 1000); // Start timer
             updateTimer(); // Start timer immediately
         }
@@ -62,7 +63,7 @@
 
         // Запускаем таймер
         timerInterval = setInterval(updateTimer, 1000);
-            </a-entity>
+            
     </a-scene>
 
     <script>
