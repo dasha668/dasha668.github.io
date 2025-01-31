@@ -53,16 +53,7 @@
         <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
           position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
         </a-entity> 
-            {
-            gameInterval = setInterval(updateTimer, 1000); // Start timer
-            updateTimer(); // Start timer immediately
-        }
-        // Initialize score and timer display
-        updateScoreDisplay();
-        document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
-
-        // Запускаем таймер
-        timerInterval = setInterval(updateTimer, 1000);
+          
             
     </a-scene>
 
