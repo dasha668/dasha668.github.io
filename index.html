@@ -108,6 +108,11 @@
         <a-entity id="explosion" particle-system="preset: explosion; color: yellow"></a-entity>
         //Интегрируйте звук при сборе:
         <a-sound src="v-starom-dome-na-obochine.mp3" autoplay="false" id="collectSound"></a-sound>
+        //Добавьте движущиеся объекты с помощью анимации:
+        <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
+          position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
+        </a-entity>
+
 
             
         // Функция для завершения игры
