@@ -121,10 +121,16 @@
           positions.push({x, y: 1, z});
   }
   return positions;
-  }
+}
         //Настройте физику для ваших объектов:
         <a-entity geometry="primitive: box" material="color: blue" 
         position="0 5 -10" dynamic-body></a-entity>
+        //Добавьте гравитацию:
+        AFRAME.registerComponent('gravity', {
+            tick: function () {
+            this.el.body.applyForce(0, -9.8, 0);
+  }
+});
 
 
 
