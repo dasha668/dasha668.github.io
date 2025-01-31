@@ -112,6 +112,17 @@
         <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
           position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
         </a-entity>
+        //Рандомизируйте позиции при перезапуске:
+        function spawnObjects() {
+      const positions = [];
+      for (let i = 0; i < 5; i++) {    
+          const x = Math.random() * 10 - 5;
+          const z = Math.random() * 10 - 5;
+          positions.push({x, y: 1, z});
+  }
+  return positions;
+  }
+
 
 
             
