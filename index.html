@@ -33,6 +33,80 @@
    <!-- Text for displaying score and timer -->
         <a-text id="score-text" value="Score: 0" position="-4 5 -8"></a-text>
         <a-text id="timer-text" value="Timer: 60" position="-4 5 -5"></a-text>
+        // Добавляем слушатель событий для столкновений
+        document.querySelector('a-scene').addEventListener('collide', handleCollision);
+     function updateTimer() {
+            timeLeft--;
+            document.getElementById('timerText').setAttribute('value', 'Время: ' + timeLeft);
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+        }
+        //Добавить физический движок
+        physics="debug: true">
+        //Добавьте анимацию исчезновения (частицы):
+        <a-entity id="explosion" particle-system="preset: explosion; color: yellow"></a-entity>
+        //Интегрируйте звук при сборе:
+        <a-sound src="v-starom-dome-na-obochine.mp3" autoplay="false" id="collectSound"></a-sound>
+            
+        /Добавьте движущиеся объекты с помощью анимации:
+        <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
+          position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
+        </a-entity>
+        //Рандомизируйте позиции при перезапуске:
+        function spawnObjects() {
+      const positions = [];
+      for (let i = 0; i < 5; i++) {    
+          const x = Math.random() * 10 - 5;
+          const z = Math.random() * 10 - 5;
+          positions.push({x, y: 1, z});
+  }
+  return positions;
+}
+        //Настройте физику для ваших объектов:
+        <a-entity geometry="primitive: box" material="color: blue" 
+        position="0 5 -10" dynamic-body></a-entity>
+        //Добавьте гравитацию:
+        AFRAME.registerComponent('gravity', {
+            tick: function () {
+            this.el.body.applyForce(0, -9.8, 0);
+  }
+});
+
+            
+        // Функция для завершения игры
+        function endGame() {
+            clearInterval(gameInterval);
+            document.getElementById('gameOverText').setAttribute('value', 'Game over! Score: ' + score);
+            document.getElementById('gameOverText').setAttribute('visible', 'true');
+            // Отключаем управление
+            document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
+        }
+        // Restart game function
+        function restartGame() {
+            score = 0;
+            timer = 60; // Reset timer to 60 seconds
+            updateScoreDisplay();
+            document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
+            document.getElementById('game-over').style.display = 'none'; // Hide game over message
+            
+            const collectibles = document.querySelectorAll('.collectible');
+            collectibles.forEach(obj => {
+                obj.setAttribute('visible', true); // Return objects to the scene
+                obj.setAttribute('position', obj.getAttribute('position')); // Ensure they are visible
+            });
+            
+            gameInterval = setInterval(updateTimer, 1000); // Start timer
+            updateTimer(); // Start timer immediately
+        }
+        // Initialize score and timer display
+        updateScoreDisplay();
+        document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
+
+        // Запускаем таймер
+        timerInterval = setInterval(updateTimer, 1000);
     </a-scene>
 
     <script>
@@ -71,84 +145,7 @@
 
         // Добавляем слушатель событий для столкновений
         document.querySelector('a-scene').addEventListener('collide', handleCollision);
-    </script>
-
-        // Добавляем слушатель событий для столкновений
-        document.querySelector('a-scene').addEventListener('collide', handleCollision);
-     function updateTimer() {
-            timeLeft--;
-            document.getElementById('timerText').setAttribute('value', 'Время: ' + timeLeft);
-
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                endGame();
-            }
-        }
-        //Добавить физический движок
-        <a-scene physics="debug: true">
-        //Добавьте анимацию исчезновения (частицы):
-        <a-entity id="explosion" particle-system="preset: explosion; color: yellow"></a-entity>
-        //Интегрируйте звук при сборе:
-        <a-sound src="v-starom-dome-na-obochine.mp3" autoplay="false" id="collectSound"></a-sound>
         <script>document.querySelector('#collectSound').components.sound.playSound();</script>
-        //Добавьте движущиеся объекты с помощью анимации:
-        <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
-          position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
-        </a-entity>
-        //Рандомизируйте позиции при перезапуске:
-        function spawnObjects() {
-      const positions = [];
-      for (let i = 0; i < 5; i++) {    
-          const x = Math.random() * 10 - 5;
-          const z = Math.random() * 10 - 5;
-          positions.push({x, y: 1, z});
-  }
-  return positions;
-}
-        //Настройте физику для ваших объектов:
-        <a-entity geometry="primitive: box" material="color: blue" 
-        position="0 5 -10" dynamic-body></a-entity>
-        //Добавьте гравитацию:
-        AFRAME.registerComponent('gravity', {
-            tick: function () {
-            this.el.body.applyForce(0, -9.8, 0);
-  }
-});
-
-
-
-            
-        // Функция для завершения игры
-        function endGame() {
-            clearInterval(gameInterval);
-            document.getElementById('gameOverText').setAttribute('value', 'Game over! Score: ' + score);
-            document.getElementById('gameOverText').setAttribute('visible', 'true');
-            // Отключаем управление
-            document.getElementById('camera').setAttribute('wasd-controls', 'enabled: false');
-        }
-        // Restart game function
-        function restartGame() {
-            score = 0;
-            timer = 60; // Reset timer to 60 seconds
-            updateScoreDisplay();
-            document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
-            document.getElementById('game-over').style.display = 'none'; // Hide game over message
-            
-            const collectibles = document.querySelectorAll('.collectible');
-            collectibles.forEach(obj => {
-                obj.setAttribute('visible', true); // Return objects to the scene
-                obj.setAttribute('position', obj.getAttribute('position')); // Ensure they are visible
-            });
-            
-            gameInterval = setInterval(updateTimer, 1000); // Start timer
-            updateTimer(); // Start timer immediately
-        }
-        // Initialize score and timer display
-        updateScoreDisplay();
-        document.getElementById('timer-text').setAttribute('value', 'Time Left: ' + timer);
-
-        // Запускаем таймер
-        timerInterval = setInterval(updateTimer, 1000);
     </script>
 </body>
 </html>
