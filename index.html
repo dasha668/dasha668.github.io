@@ -47,7 +47,10 @@
         <a-entity id="movingObj" geometry="primitive: cone" material="color: red" 
           position="0 2 -8" animation="property: position; to: 5 2 -8; dur: 2000; loop: true">
         </a-entity> 
-          
+          //Настройте физику для ваших объектов:
+          <a-entity geometry="primitive: box" material="color: blue" 
+          position="0 5 -10" dynamic-body></a-entity>
+
             
     </a-scene>
 
@@ -86,6 +89,13 @@
         //Добавьте гравитацию:
         AFRAME.registerComponent('gravity', {
             tick: function () {
+            this.el.body.applyForce(0, -9.8, 0);
+  }
+});
+        //Добавьте гравитацию:
+        Javascript:
+        AFRAME.registerComponent('gravity', {
+          tick: function () {
             this.el.body.applyForce(0, -9.8, 0);
   }
 });
